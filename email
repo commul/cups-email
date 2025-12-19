@@ -249,10 +249,10 @@ case $_mailx_version in
 esac
 
 echo "DEBUG:echo '$MailBody' \
-    | $Mailx -n -r '$MailFrom' -s '$MailSubject' $attach_opt '$MAILPDF' $MailTo" 1>&2
+    | $Mailx -n -r '$MailFrom' -s '$MailSubject' '|' Job:'$1' $attach_opt '$MAILPDF' $MailTo" 1>&2
 _mailx_status=$(
     echo "$MailBody" \
-        | $Mailx -n -r "$MailFrom" -s "$MailSubject" $attach_opt "$MAILPDF" "$MailTo" 2>&1
+        | $Mailx -n -r "$MailFrom" -s "$MailSubject | Job:$1" $attach_opt "$MAILPDF" "$MailTo" 2>&1
 )
 _mailx_rc=$?
 
