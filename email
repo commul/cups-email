@@ -238,15 +238,23 @@ fi
 # without this mailx returns without error even if sending has failed
 export sendwait=1
 _mailx_version=$($Mailx -V)
-if echo $_mailx_version|grep -q "GNU Mailutils"; then
-    echo "DEBUG:echo '$MailBody' | $Mailx -n -r '$MailFrom' -s '$MailSubject' -a $MAILPDF $MailTo" 1>&2
-    _mailx_status=$(echo "$MailBody" | $Mailx -n -r "$MailFrom" -s "$MailSubject" -a $MAILPDF $MailTo 2>&1)
-    _mailx_rc=$?
-else
-    echo "DEBUG:echo '$MailBody' | $Mailx -n -r '$MailFrom' -s '$MailSubject' -A $MAILPDF $MailTo" 1>&2
-    _mailx_status=$(echo "$MailBody" | $Mailx -n -r "$MailFrom" -s "$MailSubject" -A $MAILPDF $MailTo 2>&1)
-    _mailx_rc=$?
-fi
+# specific option(s) to use
+case $_mailx_version in
+    *"GNU Mailutils"*)
+        attach_opt=-A
+        ;;
+    *)
+        attach_opt=-a
+        ;;
+esac
+
+echo "DEBUG:echo '$MailBody' \
+    | $Mailx -n -r '$MailFrom' -s '$MailSubject' $attach_opt '$MAILPDF' $MailTo" 1>&2
+_mailx_status=$(
+    echo "$MailBody" \
+        | $Mailx -n -r "$MailFrom" -s "$MailSubject" $attach_opt "$MAILPDF" "$MailTo" 2>&1
+)
+_mailx_rc=$?
 
 rm -f $MAILPDF
 if [ $# -lt 6 ];then
