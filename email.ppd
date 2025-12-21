@@ -25,19 +25,19 @@
 
 *OpenUI *PageSize/Media Size: PickOne
 *OrderDependency: 0 AnySetup *PageSize
-*DefaultPageSize: Letter
+*DefaultPageSize: A4
 *PageSize A4/A4: "<</PageSize[595 842]/ImagingBBox null>>setpagedevice"
 *PageSize Letter/US Letter: "<</PageSize[612 792]/ImagingBBox null>>setpagedevice"
 *PageSize Legal/US Legal: "<</PageSize[612 1008]/ImagingBBox null>>setpagedevice"
 *CloseUI: *PageSize
 
-*DefaultPageRegion: Letter
+*DefaultPageRegion: A4
 *PageRegion A4/A4:		"<</PageSize[595 842]/ImagingBBox null>>setpagedevice"
 *PageRegion Letter/US Letter:	"<</PageSize[612 792]/ImagingBBox null>>setpagedevice"
 *PageRegion Legal/US Legal:	"<</PageSize[612 1008]/ImagingBBox null>>setpagedevice"
 
-*DefaultImageableArea: Letter
-*DefaultPaperDimension: Letter
+*DefaultImageableArea: A4
+*DefaultPaperDimension: A4
 *ImageableArea Letter: "13 12 596 774 "
 *ImageableArea Legal: "15 13 597 991 "
 *ImageableArea A4: "13 12 579 824 "
@@ -47,7 +47,7 @@
 
 *OpenUI MailTo/E-Mail Address: PickOne
 *OrderDependency: 10 AnySetup *MailTo
-*DefaultMailTo: None
+*DefaultMailTo: Custom.mobileprint@scientificnet.eu.uniflowonline.com
 *MailTo None/Selected by source: ""
 *CloseUI: *MailTo
 
@@ -120,7 +120,7 @@
 
 *% configuration for mailx, mailrc
 *OpenUI *mailx_MAILRC/Path to mailrc: PickOne
-*Defaultmailx_MAILRC: Default
+*Defaultmailx_MAILRC: Custom.mailx-wrapper.conf
 *mailx_MAILRC Default/Default path: "/dev/null"
 *CloseUI: *mailx_MAILRC
 

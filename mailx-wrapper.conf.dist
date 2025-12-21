@@ -1,0 +1,7 @@
+host=smtp.doma.in
+port=587
+proto=smtp
+tls_required=yes
+user=user%40doma.in
+password=THEPASSWORD
+auth=yes

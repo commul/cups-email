@@ -1,7 +1,8 @@
+CUPS_ETC_DIR?=/etc/cups
 CUPS_PPD_DIR?=/usr/share/cups/model
 CUPS_BACKEND_DIR?=/usr/lib/cups/backend
 PS2PDF?=/usr/bin/epstopdf
-MAILX?=/usr/bin/mailx
+MAILX?=$(CUPS_BACKEND_DIR)/mailx-wrapper.sh
 TMPDIR?=/tmp
 
 Q?=@
@@ -10,6 +11,8 @@ install:
 	$(Q)echo "Installing to $(DESTDIR)/"
 	$(Q)install -D -m644 email.ppd $(DESTDIR)/$(CUPS_PPD_DIR)/email.ppd
 	$(Q)install -D -m755 email $(DESTDIR)/$(CUPS_BACKEND_DIR)/email
+	$(Q)install -D -g lp -m750 mailx-wrapper.sh  $(DESTDIR)/$(CUPS_BACKEND_DIR)/mailx-wrapper.sh
+	$(Q)install -D -g lp -m640 mailx-wrapper.conf.dist  $(DESTDIR)/$(CUPS_ETC_DIR)/mailx-wrapper.conf.dist
 	$(Q)sed -i "s,/usr/bin/epstopdf,$(PS2PDF),g" $(DESTDIR)/$(CUPS_PPD_DIR)/email.ppd
 	$(Q)sed -i "s,/usr/bin/mailx,$(MAILX),g" $(DESTDIR)/$(CUPS_PPD_DIR)/email.ppd
 	$(Q)sed -i "s,/tmp,$(TMPDIR),g" $(DESTDIR)/$(CUPS_PPD_DIR)/email.ppd

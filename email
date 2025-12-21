@@ -240,6 +240,11 @@ export sendwait=1
 _mailx_version=$($Mailx -V)
 # specific option(s) to use
 case $_mailx_version in
+    *"mailx-wrapper"*)
+	export -n MAILRC
+	mailrc_opt="--smtp $MAILRC"
+        attach_opt=-A
+	;;
     *"GNU Mailutils"*)
         attach_opt=-A
         ;;
@@ -249,10 +254,10 @@ case $_mailx_version in
 esac
 
 echo "DEBUG:echo '$MailBody' \
-    | $Mailx -n -r '$MailFrom' -s '$MailSubject' '|' Job:'$1' $attach_opt '$MAILPDF' $MailTo" 1>&2
+    | $Mailx $mailrc_opt -n -r '$MailFrom' -s '$MailSubject' '|' Job:'$1' $attach_opt '$MAILPDF' $MailTo" 1>&2
 _mailx_status=$(
     echo "$MailBody" \
-        | $Mailx -n -r "$MailFrom" -s "$MailSubject | Job:$1" $attach_opt "$MAILPDF" "$MailTo" 2>&1
+        | $Mailx $mailrc_opt -n -r "$MailFrom" -s "$MailSubject | Job:$1" $attach_opt "$MAILPDF" "$MailTo" 2>&1
 )
 _mailx_rc=$?
 
